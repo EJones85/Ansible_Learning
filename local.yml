@@ -1,0 +1,40 @@
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Install vim
+      yum:
+        state: present
+        name: vim
+        update_cache: yes
+      become: true
+
+    - name: Install pip
+      yum:
+        state: present
+        name: python-pip
+      become: true
+
+    - name: Install epel
+      yum:
+        state: present
+        name: epel-release
+      become: true
+
+    - name: Install osquery RPM
+      yum:
+        state: present
+        name: https://osquery-packages.s3.amazonaws.com/centos7/noarch/osquery-s3-centos7-repo-1-0.0.noarch.rpm
+      become: true
+
+    - name: Install osquery
+      yum:
+        state: present
+        name: osquery
+      become: true
+
+    - name: Install git
+      yum:
+        state: present
+        name: git
+      become: true
