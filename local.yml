@@ -1,6 +1,8 @@
 ---
 - hosts: localhost
   connection: local
+  vars:
+    ssh_port: 3232
   tasks:
     - name: Install vim
       yum:
@@ -38,3 +40,19 @@
         state: present
         name: git
       become: true
+      
+    - name: Update SSH Config
+      template:
+        src: /etc/ansible/Ansible_Learning/Templates/sshd_config.j2
+        dest: /etc/ssh/sshd_config
+        owner: root
+        group: root
+        mode: 0644
+        notify:
+        - Restart SSH
+     
+  handlers:
+    - name: Restart SSH
+      service:
+        name: sshd
+        state: restarted 
